@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import express from "express";
 import createHttpError from "http-errors";
-import globalErrorHandler from "../middlewares/globalErrorHandler";
+import globalErrorHandler from "./middlewares/globalErrorHandler";
+import userRouter from "./user/userRouter";
 
 const app = express();
 
@@ -11,6 +12,13 @@ app.get("/", (req, res, next) => {
 
     res.send("Hello world")
 })
+
+// Middlewares
+app.use(express.json());
+
+
+// Registering Routers
+app.use("/api/users", userRouter);
 
 
 // Global Error Handler
