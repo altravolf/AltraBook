@@ -5,7 +5,8 @@ conf();
 const _config = {
     port: process.env.PORT || 3000,
     dbUrl: process.env.DB_URI,
-    env: process.env.ENV
+    env: process.env.ENV,
+    jwtToken: process.env.JWT_TOKEN
 }
 
 
