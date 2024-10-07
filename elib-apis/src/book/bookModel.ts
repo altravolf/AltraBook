@@ -18,11 +18,11 @@ const bookSchema = new Schema({
     admin: {
         type: mongoose.Schema.Types.ObjectId,
         // type: String,
-        required: true
+        // required: true
     },
     genre: {
         type: String,
-        default: "Uncategories"
+        // default: "Uncategories"
     },
     coverImage: {
         type: String,
