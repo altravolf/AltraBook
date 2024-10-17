@@ -2,6 +2,7 @@ import express from "express";
 import { createBook } from "./bookController";
 import multer from "multer";
 import path from "path";
+import authenticate from "../middlewares/authenticate";
 const bookRouter = express.Router();
 
 // Set up multer for file uploads with custom storage configuration
@@ -22,6 +23,7 @@ const upload = multer({
 // Route for creating a book with cover image and additional file
 bookRouter.post(
     "/",
+    authenticate,
     upload.fields([
         { name: "coverImage", maxCount: 1 },  // Expecting a single file for coverImage
         { name: "file", maxCount: 1 }         // Expecting a single additional file

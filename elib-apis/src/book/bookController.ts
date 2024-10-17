@@ -8,6 +8,7 @@ import path from "node:path";
 import fs from "node:fs";
 import Book from "./bookModel";
 import createHttpError from "http-errors";
+import { AuthRequest } from "../middlewares/authenticate";
 
 const createBook = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
 
@@ -33,7 +34,9 @@ const createBook = asyncHandler(async (req: Request, res: Response, next: NextFu
         format: "pdf"
     })
 
-    const newBook = await Book.create({ ...req.body, coverImage: coverImageUploader.secure_url, file: fileUploader.secure_url })
+    const _req = req as AuthRequest;
+
+    const newBook = await Book.create({ ...req.body, coverImage: coverImageUploader.secure_url, file: fileUploader.secure_url, admin: _req.userId });
 
     // Delete files from uploads folder
     try {
