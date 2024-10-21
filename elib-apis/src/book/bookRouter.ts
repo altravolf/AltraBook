@@ -1,5 +1,5 @@
 import express from "express";
-import { createBook } from "./bookController";
+import { createBook, updateBook, showBook, singleBook, deleteBook } from "./bookController";
 import multer from "multer";
 import path from "path";
 import authenticate from "../middlewares/authenticate";
@@ -21,14 +21,33 @@ const upload = multer({
 });
 
 // Route for creating a book with cover image and additional file
-bookRouter.post(
-    "/",
-    authenticate,
-    upload.fields([
-        { name: "coverImage", maxCount: 1 },  // Expecting a single file for coverImage
-        { name: "file", maxCount: 1 }         // Expecting a single additional file
-    ]),
-    createBook
-);
+bookRouter
+    // Post request for creating book
+    .post(
+        "/",
+        authenticate,
+        upload.fields([
+            { name: "coverImage", maxCount: 1 },  // Expecting a single file for coverImage
+            { name: "file", maxCount: 1 }         // Expecting a single additional file
+        ]),
+        createBook)
+
+    // Patch request for updating book 
+    .patch("/:bookId/update",
+        authenticate,
+        upload.fields([
+            { name: "coverImage", maxCount: 1 },  // Expecting a single file for coverImage
+            { name: "file", maxCount: 1 }         // Expecting a single additional file
+        ]),
+        updateBook)
+
+    // Get request for showing book list
+    .get("/", showBook)
+
+    // Get request for single showing single book
+    .get("/:bookId", singleBook)
+
+    // Delete request to delete single book
+    .delete("/:bookId", authenticate, deleteBook)
 
 export default bookRouter;

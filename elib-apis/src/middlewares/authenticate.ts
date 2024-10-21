@@ -12,7 +12,7 @@ const authenticate = async (req: Request, res: Response, next: NextFunction) => 
     const token = req.header("Authorization");
 
     if (!token) {
-        return next(createHttpError(401, "Token not found!"));
+        return next(createHttpError(401, "Access Denied!"));
     }
 
     try {
