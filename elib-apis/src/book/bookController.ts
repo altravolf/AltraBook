@@ -74,13 +74,23 @@ const updateBook = asyncHandler(async (req: Request, res: Response, next: NextFu
 
     let overrideCoverImage = "";
     if (files?.coverImage) {
+
+        // deleting coverImage from Cloudinary
+        const coverImage = book.coverImage.split("/");
+
+        const firstPartCoverImage = coverImage.at(-2);
+        const secondPartCoverImage = coverImage.at(-1).split(".").at(0);
+
+        const publicIdCoverImage = firstPartCoverImage + "/" + secondPartCoverImage;
+        const delClaudinaryCoverImage = await cloudinary.uploader.destroy(publicIdCoverImage);
+
         const coverImageName = files?.coverImage[0].filename;
 
         const coverImagePath = path.resolve(__dirname, `../../public/data/uploads/${coverImageName}`);
 
         const coverImageUploader = await cloudinary.uploader.upload(coverImagePath, {
             filename_override: coverImageName,
-            folder: "book covers",
+            folder: "book-covers",
         })
 
         overrideCoverImage = coverImageUploader.secure_url;
@@ -90,13 +100,22 @@ const updateBook = asyncHandler(async (req: Request, res: Response, next: NextFu
 
     let overrideFile = "";
     if (files?.file) {
+        // deleting file from Cloudinary
+        const file = book.file.split("/");
+
+        const firstPartFile = file.at(-2);
+        const secondPartFile = file.at(-1);
+
+        const publicIdFile = firstPartFile + "/" + secondPartFile;
+        const delClaudinaryFile = await cloudinary.uploader.destroy(publicIdFile);
+
         const fileName = files?.file[0].filename;
 
         const filePath = path.resolve(__dirname, `../../public/data/uploads/${fileName}`);
 
         const fileUploader = await cloudinary.uploader.upload(filePath, {
             filename_override: fileName,
-            folder: "book pdfs",
+            folder: "book-pdfs",
             resource_type: "raw",
             format: "pdf"
         })
