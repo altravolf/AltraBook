@@ -4,6 +4,7 @@ import createHttpError from "http-errors";
 import globalErrorHandler from "./middlewares/globalErrorHandler";
 import userRouter from "./user/userRouter";
 import bookRouter from "./book/bookRouter";
+import cors from "cors";
 
 const app = express();
 
@@ -13,6 +14,13 @@ app.get("/", (req, res, next) => {
 
     res.send("Hello world")
 })
+
+// Configuring CORS
+app.use(cors({
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+    // credentials: true
+}))
 
 // Middlewares
 app.use(express.json());
