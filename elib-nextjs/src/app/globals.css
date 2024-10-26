@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+/* ! Dark mode support is removed, if you want to enable dark mode, please enter your own configuration. */
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+} */
+
+
+body {
+  /* color: var(--foreground); */
+  /* background: var(--background); */
+  font-family: Arial, Helvetica, sans-serif;
+}
